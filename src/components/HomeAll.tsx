@@ -1,4 +1,4 @@
-import React from 'react'
+
 import DashBoard from './DashBoard'
 import QuickActionSection from './QuickActionSection'
 import EmployeeCompositions from './EmployeeCompositions'
