@@ -1,17 +1,34 @@
 import { Card, Text, Group, ThemeIcon,  } from "@mantine/core";
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
-import { User, Menu } from "lucide-react";
+import { User, Menu, Info } from "lucide-react";
 import file from "../assets/file.svg"
 import { Progress, Tooltip as MantineTooltip } from '@mantine/core';
+import { BarChart } from '@mantine/charts';
+import { useState } from "react";
 
 const data = [
-  { name: "Full Time", value: 30, color: "#5B3FB8" },
-  { name: "Part Time", value: 20, color: "#D97745" }, 
-  { name: "Contract", value: 15, color: "#2D8F4E" },
-  { name: "Temporary", value: 10, color: "#3469F0" },
+  { name: "Full Time", value: 1001, color: "#5B3FB8" },
+  { name: "Part Time", value: 500, color: "#D97745" }, 
+  { name: "Contract", value: 103, color: "#2D8F4E" },
+  { name: "Temporary", value: 6, color: "#3469F0" },
 ];
 
+ const barData = [
+  { week: 'Mon', Smartphones: 1200, Laptops: 900, Tablets: 200 },
+  { week: 'Tue', Smartphones: 1900, Laptops: 1200, Tablets: 400 },
+  { week: 'Wed', Smartphones: 400, Laptops: 1000, Tablets: 200 },
+  { week: 'Thu', Smartphones: 1000, Laptops: 200, Tablets: 800 },
+  { week: 'Fri', Smartphones: 800, Laptops: 1400, Tablets: 1200 },
+  { week: 'Sat', Smartphones: 750, Laptops: 600, Tablets: 1000 },
+  { week: 'Sun', Smartphones: 750, Laptops: 600, Tablets: 1000 },
+];
+
+
 const EmployeeStats = () => {
+  const [workingType, setWorkingType] = useState(false);
+  const handleCreateEmployeeClick = () => {
+    setWorkingType(true);
+  }
   return (
     <div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 ">
@@ -68,35 +85,38 @@ const EmployeeStats = () => {
           <Text fw={600}>Working Type</Text>
         </Group>
 
-        <div className="space-y-2 mt-4 flex items-center justify-between">
+       
+       
+              {!workingType ? (
+
+                <div>
+                   <div className="space-y-2 mt-4 flex items-center justify-between">
           <div className="">
             <div className="flex items-center gap-2">
                <div className="w-1 h-2 rounded-2xl bg-[Orange]" />
             <Text size="sm" color="#908C9C">Remote</Text>
             </div>
-            <Text color="#48464E" fw={600}>25</Text>
+            <Text color="#48464E" fw={600}>0</Text>
           </div>
           <div className="">
             <div className="flex items-center gap-2">
                <div className="w-1 h-2 rounded-2xl bg-[#E68057]" />
             <Text size="sm" color="#908C9C">Hybrid</Text>
             </div>
-            <Text color="#48464E" fw={600}>35</Text>
+            <Text color="#48464E" fw={600}>0</Text>
           </div>
           <div className="">
             <div className="flex items-center gap-2">
                <div className="w-1 h-2 rounded-2xl bg-[#69615e]" />
             <Text size="sm" color="#908C9C">Onsite</Text>
             </div>
-            <Text color="#48464E" fw={600}>15</Text>
+            <Text color="#48464E" fw={600}>0</Text>
           </div>
           
           
         </div>
-       
-
-        {/* No Data Message */}
-        <div className="text-center mt-6 lg:px-20 flex flex-col items-center">
+         
+        <div className="text-center mt-6 lg:px-20 flex flex-col items-center ">
           <img src={file} alt="file"  />
           <Text fw={600} className="text-gray-500">
             No <span className="text-orange-500 border-b">Data</span>
@@ -106,12 +126,62 @@ const EmployeeStats = () => {
           </Text>
           
             <button
-          
-          className="mt-4 px-8 lg:px-[5.5rem] py-2 bg-[#E16635] text-white font-medium rounded-full hover:bg-[#B3542B] transition"
+          onClick={handleCreateEmployeeClick}
+          className="mt-4 px-8 lg:px-[4rem] py-2 bg-[#E16635] text-white font-medium rounded-full hover:bg-[#B3542B] transition"
         >
          Create Employee
         </button>
         </div>
+                </div>
+       
+
+               ) : (
+
+                <div>
+                  <div className="space-y-2 mt-4 flex items-center justify-between">
+          <div className="">
+            <div className="flex items-center gap-2">
+               <div className="w-1 h-2 rounded-2xl bg-[Orange]" />
+            <Text size="sm" color="#908C9C">Remote</Text>
+            </div>
+            <Text color="#48464E" fw={600}>1,400</Text>
+          </div>
+          <div className="">
+            <div className="flex items-center gap-2">
+               <div className="w-1 h-2 rounded-2xl bg-[#E68057]" />
+            <Text size="sm" color="#908C9C">Hybrid</Text>
+            </div>
+            <Text color="#48464E" fw={600}>250</Text>
+          </div>
+          <div className="">
+            <div className="flex items-center gap-2">
+               <div className="w-1 h-2 rounded-2xl bg-[#69615e]" />
+            <Text size="sm" color="#908C9C">Onsite</Text>
+            </div>
+            <Text color="#48464E" fw={600}>259</Text>
+          </div>
+          
+          
+        </div>
+        <BarChart className="pt-8"
+      h={300}
+      data={barData}
+      dataKey="week"
+      xAxisLabel="Days"
+      yAxisLabel="Number of Users"
+     
+      type="stacked"
+      series={[
+        { name: 'Smartphones', color: '#964423' },
+        { name: 'Laptops', color: '#E68057' },
+        { name: 'Tablets', color: '#F0B29A' },
+      ]}
+    />
+                </div>
+    )}
+
+
+      
       </Card>
       
     </div>
@@ -123,24 +193,42 @@ const EmployeeStats = () => {
           <Text style={{ fontWeight: 600 }}>Gender Distribution</Text>
         </Group>
             <Progress.Root size={35}>
-      <MantineTooltip label="Male(0) – 35Gb">
+      <MantineTooltip label="Male(1000) – 35Gb">
         <Progress.Section value={35} color="#3E1C96">
-          <Progress.Label style={{fontWeight: 500}}>Male(0)</Progress.Label>
+          {/* <Progress.Label style={{fontWeight: 500, fontSize: 18}}>Male(1000)</Progress.Label> */}
+          <p className="font-[500] text-sm lg:text-[20px] text-white">Male(1000)</p> 
         </Progress.Section>
       </MantineTooltip>
 
-      <MantineTooltip label="Female(0) – 35Gb">
+      <MantineTooltip label="Female(600) – 35Gb">
         <Progress.Section value={35} color="#9E8DCA">
-          <Progress.Label style={{fontWeight: 500}}>Female(0)</Progress.Label>
+          {/* <Progress.Label style={{fontWeight: 500}}>Female(600)</Progress.Label> */}
+          <p className="font-[500] text-sm lg:text-[20px] text-white">Female(600)</p> 
         </Progress.Section>
       </MantineTooltip>
 
-      <MantineTooltip label="Other(0) – 30Gb">
+      <MantineTooltip label="Other(10) – 30Gb">
         <Progress.Section value={30} color="#D8D2EA">
-          <Progress.Label style={{fontWeight: 500, color: "#3E1C96"}}>Other(0)</Progress.Label>
+          {/* <Progress.Label style={{fontWeight: 500, color: "#3E1C96"}}>Other(10)</Progress.Label> */}
+          <p className="font-[500] text-sm lg:text-[20px] text-[#3E1C96]">Others(10)</p> 
         </Progress.Section>
       </MantineTooltip>
     </Progress.Root>
+    <div>
+      <div className="flex items-center space-x-2 text-gray-500 text-sm py-3">
+                <Info size={16} />
+                <span className="font-medium text-[16px] pl-2">Representing 62.3% of the total workforce, males constitute the majority in the company.</span>
+              </div>
+      <div className="flex items-center space-x-2 text-gray-500 text-sm py-3">
+                <Info size={16} />
+                <span className="font-medium text-[16px] pl-2">Accounting for 37.4%, females form a significant proportion of the workforce.</span>
+              </div>
+      <div className="flex items-center space-x-2 text-gray-500 text-sm py-3">
+                <Info size={16} />
+                <span className="font-medium text-[16px] pl-2">Representing 0.3%, this category highlights the presence of employees who identify outside the traditional binary gender classifications.</span>
+              </div>
+      
+    </div>
 
       </div>
     </div>
