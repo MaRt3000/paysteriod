@@ -6,13 +6,11 @@ import sbsc from '../assets/sbsc.svg';
 import notification from '../assets/notification.svg';
 import n2 from '../assets/n2.svg';
 import profile from '../assets/profile.svg';
-import QuickActionSection from './QuickActionSection';
-import EmployeeCompositions from './EmployeeCompositions';
-import UrgentTask from './UrgentTask';
-import PayrollProcessing from './PayrollProcessing';
+
 import { useState } from "react";
 import { UnstyledButton } from "@mantine/core";
 import { ChevronUp, ChevronDown } from "lucide-react";
+import { Link } from 'react-router-dom';
 
 const DashBoard = () => {
   const [opened, { toggle }] = useDisclosure();
@@ -74,11 +72,12 @@ const DashBoard = () => {
         </Group>
         <div className='flex flex-col gap-10'>
           <div className='flex flex-col text-[#D8D2EA] gap-2 py-6 pl-4'>
+           <Link to="/home">
             <div className='flex items-center gap-[14px] ml-[-16px] p-4 rounded-xl font-bold bg-[#E16635]'>
               <img src={lock} alt="logo" className='' />
               <p className='text-white'>Dashboard</p>
             </div>
-
+              </Link>
             <div className='pt-6'>
               <UnstyledButton
                 onClick={() => toggleDropdown('employeeManagement')}
@@ -125,10 +124,12 @@ const DashBoard = () => {
               )}
             </div>
 
-            <div className='flex items-center gap-[14px] pt-6'>
-              <img src={lock} alt="logo" className='' />
-              <p>Wallet Management</p>
-            </div>
+              <Link to="/wallet">
+  <div className="flex items-center gap-[14px] pt-6">
+    <img src={lock} alt="logo" className="" />
+    <p>Wallet Management</p>
+  </div>
+</Link>
 
             <div className='pt-6'>
               <UnstyledButton
@@ -210,13 +211,8 @@ const DashBoard = () => {
           </div>
         </div>
       </AppShell.Navbar>
-      <AppShell.Main className="bg-[#F7F6FB] ">
-        <div>
-          <QuickActionSection />
-          <EmployeeCompositions />
-          <UrgentTask />
-          <PayrollProcessing />
-        </div>
+      <AppShell.Main className=" ">
+        
       </AppShell.Main>
     </AppShell>
   );
